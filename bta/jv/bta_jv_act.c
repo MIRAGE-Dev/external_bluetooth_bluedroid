@@ -44,6 +44,7 @@
 #include "avdt_api.h"
 #include "gap_api.h"
 
+
 #define HDL2CB(handle) \
     UINT32  __hi = ((handle) & BTA_JV_RFC_HDL_MASK) - 1; \
     UINT32  __si = BTA_JV_RFC_HDL_TO_SIDX(handle); \
@@ -228,6 +229,28 @@ tBTA_JV_RFC_CB * bta_jv_alloc_rfc_cb(UINT16 port_handle, tBTA_JV_PCB **pp_pcb)
 ** Returns
 **
 *******************************************************************************/
+tBTA_JV_PCB * bta_jv_rfc_port_to_pcb(UINT16 port_handle)
+{
+    tBTA_JV_PCB *p_pcb = NULL;
+
+    if ((port_handle > 0) && (port_handle <= MAX_RFC_PORTS)
+            && bta_jv_cb.port_cb[port_handle - 1].handle)
+    {
+        p_pcb = &bta_jv_cb.port_cb[port_handle - 1];
+    }
+
+    return p_pcb;
+}
+
+/*******************************************************************************
+**
+** Function     bta_jv_rfc_port_to_cb
+**
+** Description  find the RFCOMM control block associated with the given port handle
+**
+** Returns
+**
+*******************************************************************************/
 tBTA_JV_RFC_CB * bta_jv_rfc_port_to_cb(UINT16 port_handle)
 {
     tBTA_JV_RFC_CB *p_cb = NULL;
@@ -387,6 +410,7 @@ tBTA_JV_STATUS bta_jv_free_l2c_cb(tBTA_JV_L2C_CB *p_cb)
 #endif
     return 0;
 }
+
 /*******************************************************************************
  **
  ** Function    bta_jv_clear_pm_cb
@@ -2147,15 +2171,6 @@ static int find_rfc_pcb(void* user_data, tBTA_JV_RFC_CB **cb, tBTA_JV_PCB **pcb)
 ** Returns      void
 **
 *******************************************************************************/
-/*******************************************************************************
-**
-** Function     bta_jv_rfcomm_close
-**
-** Description  Close an RFCOMM connection
-**
-** Returns      void
-**
-*******************************************************************************/
 void bta_jv_rfcomm_close(tBTA_JV_MSG *p_data)
 {
     tBTA_JV_API_RFCOMM_CLOSE *cc = &(p_data->rfcomm_close);
@@ -2511,6 +2526,7 @@ FALSE-POSITIVE: port_state is initialized at PORT_GetState() */
 ** Returns      void
 **
 *******************************************************************************/
+
 void bta_jv_rfcomm_stop_server(tBTA_JV_MSG *p_data)
 {
     tBTA_JV_API_RFCOMM_SERVER *ls = &(p_data->rfcomm_server);
