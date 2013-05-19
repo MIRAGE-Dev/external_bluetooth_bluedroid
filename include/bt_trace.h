@@ -142,7 +142,7 @@ typedef UINT8 tBTTRC_LAYER_ID;
 /* Trace type definitions. Note that these are mutually exclusive in a trace. This
 means that any trace can be either error,warning,api,event or dbg */
 #define BTTRC_TYPE_ERROR                   0x01       /* Traces for error situation */
-#define BTTRC_TYPE_WARNING	               0x02       /* Traces for warning situation */
+#define BTTRC_TYPE_WARNING	           0x02       /* Traces for warning situation */
 #define BTTRC_TYPE_API                     0x04       /* Traces for API */
 #define BTTRC_TYPE_EVENT                   0x08       /* Traces for EVENT */
 #define BTTRC_TYPE_ACTION                  0x10       /* Traces for Action functions */
@@ -253,14 +253,6 @@ EXPORT_API extern void BTTRC_StackTrace6(tBTTRC_LAYER_ID layer_id,
                                    tBTTRC_PARAM_TYPE p5_type, UINT32 p5_val,
                                    tBTTRC_PARAM_TYPE p6_type, UINT32 p6_val);
 
-// btla-specific ++
-/* p_levels must be a 0 terminated list ! */
-//EXPORT_API extern tBTTRC_LEVEL * BTA_SysSetTraceLevel( tBTTRC_LEVEL * p_levels );
-// btla-specific --
-
-#ifdef __cplusplus
-}
-#endif
 
 /******************************************************************************
 **
